@@ -75,10 +75,10 @@ function MyNavbar() {
               onMouseEnter={mouseEnter}
               onMouseLeave={mouseLeave}
             >
-              <ListGroup.Item className="text-secondary" href="http://127.0.0.1:3000/?slugName=Dji-Mavic" action>DJI Mavic</ListGroup.Item>
-              <ListGroup.Item className="text-secondary" href="http://127.0.0.1:3000/?slugName=Dji-Mini" action>DJI Mini</ListGroup.Item>
-              <ListGroup.Item className="text-secondary" href="http://127.0.0.1:3000/?slugName=Dji-Air" action>Dji Air</ListGroup.Item>
-              <ListGroup.Item className="text-secondary" href="http://127.0.0.1:3000/" action>Phụ kiện</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-3nae-nn5s4pl9e-dolaptruongvus-projects.vercel.app/?slugName=Dji-Mavic" action>DJI Mavic</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-3nae-nn5s4pl9e-dolaptruongvus-projects.vercel.app/?slugName=Dji-Mini" action>DJI Mini</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-3nae-nn5s4pl9e-dolaptruongvus-projects.vercel.app/?slugName=Dji-Air" action>Dji Air</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-3nae-nn5s4pl9e-dolaptruongvus-projects.vercel.app/" action>Phụ kiện</ListGroup.Item>
             </ListGroup>
           )}
         </div>
