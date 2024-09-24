@@ -16,7 +16,7 @@ function ControlledCarousel() {
   useEffect(()=>{
     const fetchProducts = async() =>{
       try{
-        const response = await axios.get('http://127.0.0.1:5000/api/v1/products/top3Products')
+        const response = await axios.get('https://uav-store-backend.onrender.com/api/v1/products/top3Products')
         setProducts(response.data.data)
         
       }catch(err){

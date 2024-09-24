@@ -12,7 +12,7 @@ function ProductList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let url = 'http://127.0.0.1:5000/api/v1/products';
+        let url = 'https://uav-store-backend.onrender.com/api/v1/products';
         if (slugName) {
           url += `?slugName=${slugName}`;
         }
