@@ -75,10 +75,10 @@ function MyNavbar() {
               onMouseEnter={mouseEnter}
               onMouseLeave={mouseLeave}
             >
-              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end.vercel.app/?slugName=Dji-Mavic" action>DJI Mavic</ListGroup.Item>
-              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end.vercel.app/?slugName=Dji-Mini" action>DJI Mini</ListGroup.Item>
-              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end.vercel.app/?slugName=Dji-Air" action>Dji Air</ListGroup.Item>
-              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end.vercel.app/" action>Phụ kiện</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/?slugName=Dji-Mavic" action>DJI Mavic</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/?slugName=Dji-Mini" action>DJI Mini</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/?slugName=Dji-Air" action>Dji Air</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/" action>Phụ kiện</ListGroup.Item>
             </ListGroup>
           )}
         </div>
