@@ -12,7 +12,7 @@ import {
 import { AuthContext } from "./login/authProvider";
 import axiosInstance from "../utilities/axiousEdition";
 import { useNavigate } from "react-router-dom";
-
+import Cookies from "js-cookie";
 
 function MyNavbar() {
   const[isHovered,SetIsHovered] = useState(false);
@@ -27,19 +27,20 @@ function MyNavbar() {
     SetIsHovered(false);
   }
 
-  const handleLogOut = async(e:React.MouseEvent<HTMLButtonElement,MouseEvent>)=>{
-    try{
+  const handleLogOut = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    try {
       e.preventDefault();
-    const response = await axiosInstance.get('/customer/logout');
-    if(response.data.status === 'success'){
+      const response = await axiosInstance.get('/customer/logout');
+      if (response.data.status === 'success') {
         setCustomer(null);
-        navigate('/')
+        Cookies.remove("jwt"); // Xóa cookie "jwt" khi đăng xuất
+        navigate('/');
+      }
+    } catch (err) {
+      console.log(err);
     }
-    }catch(err){
-         console.log(err)
-    }
-    
-  }
+  };
+  
   
 
   return (
@@ -97,6 +98,11 @@ function MyNavbar() {
         <div className="d-flex flex-shrink-0">
           {customer ? (
             <>
+              {customer.role === 'admin' && (
+                <button className="btn btn-outline-warning me-2 py-2 px-4" onClick={() => navigate('/management')}>
+                  Management
+                </button>
+              )}
               <button className="btn btn-outline-danger me-2 py-2 px-4" onClick={handleLogOut}>
                 Đăng Xuất
               </button>
