@@ -97,8 +97,8 @@ function MyNavbar() {
           {customer ? (
             <>
               {customer.role === 'admin' && (
-                <button className="btn btn-outline-warning me-2 py-2 px-4" onClick={() => navigate('/management')}>
-                  Management
+                <button className="btn btn-success me-2 py-2 px-4" onClick={() => navigate('/management')}>
+                Management
                 </button>
               )}
               <button className="btn btn-outline-danger me-2 py-2 px-4" onClick={handleLogOut}>
