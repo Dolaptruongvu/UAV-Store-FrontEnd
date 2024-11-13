@@ -12,7 +12,6 @@ import {
 import { AuthContext } from "./login/authProvider";
 import axiosInstance from "../utilities/axiousEdition";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 function MyNavbar() {
   const[isHovered,SetIsHovered] = useState(false);
@@ -33,7 +32,6 @@ function MyNavbar() {
       const response = await axiosInstance.get('/customer/logout');
       if (response.data.status === 'success') {
         setCustomer(null);
-        Cookies.remove("jwt"); // Xóa cookie "jwt" khi đăng xuất
         navigate('/');
       }
     } catch (err) {
