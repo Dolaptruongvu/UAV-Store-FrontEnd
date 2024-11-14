@@ -3,12 +3,19 @@ import React, { useState } from "react";
 const Update: React.FC = () => {
   const [uavId, setUavId] = useState("");
   const [newDescription, setNewDescription] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   const handleUpdate = () => {
-    console.log("Update UAV ID:", uavId, "New Description:", newDescription);
-    alert("Chưa có api");
+    console.log("Update UAV ID:", uavId, "New Description:", newDescription, "File:", file);
+    alert("UAV update placeholder - No API available yet.");
     setUavId("");
     setNewDescription("");
+    setFile(null);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files && e.target.files[0];
+    setFile(selectedFile ? selectedFile : null);
   };
 
   return (
@@ -25,6 +32,11 @@ const Update: React.FC = () => {
         placeholder="New Description"
         value={newDescription}
         onChange={(e) => setNewDescription(e.target.value)}
+        className="form-control my-2"
+      />
+      <input
+        type="file"
+        onChange={handleFileChange}
         className="form-control my-2"
       />
       <button onClick={handleUpdate} className="btn btn-warning">

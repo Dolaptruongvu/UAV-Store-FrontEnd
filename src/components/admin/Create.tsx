@@ -3,12 +3,19 @@ import React, { useState } from "react";
 const Create: React.FC = () => {
   const [uavName, setUavName] = useState("");
   const [description, setDescription] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   const handleCreate = () => {
-    console.log("Add UAV:", { name: uavName, description });
-    alert("Không có API add add cc");
+    console.log("Create UAV:", { name: uavName, description, file });
+    alert("NO API");
     setUavName("");
     setDescription("");
+    setFile(null);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files && e.target.files[0];
+    setFile(selectedFile ? selectedFile : null);
   };
 
   return (
@@ -25,6 +32,11 @@ const Create: React.FC = () => {
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        className="form-control my-2"
+      />
+      <input
+        type="file"
+        onChange={handleFileChange}
         className="form-control my-2"
       />
       <button onClick={handleCreate} className="btn btn-primary">
