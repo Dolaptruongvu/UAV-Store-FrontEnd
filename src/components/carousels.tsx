@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import CarouselImage from './carousels-image';
 import axios from 'axios';
+import axiosInstance from '../utilities/axiousEdition';
 
 function ControlledCarousel() {
   // Khai báo kiểu dữ liệu cho state `index`
@@ -16,7 +17,7 @@ function ControlledCarousel() {
   useEffect(()=>{
     const fetchProducts = async() =>{
       try{
-        const response = await axios.get('https://uav-store-backend.onrender.com/api/v1/products/top3Products')
+        const response = await axiosInstance.get('/products/top3Products')
         setProducts(response.data.data)
         
       }catch(err){
