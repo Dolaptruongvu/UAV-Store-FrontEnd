@@ -60,7 +60,7 @@ function MyNavbar() {
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
           >
-            Sản phẩm  <span style={{ marginLeft: '5px' }}>&#x25BC;</span>
+            Products  <span style={{ marginLeft: '5px' }}>&#x25BC;</span>
           </h6>
           {isHovered && (
             <ListGroup
@@ -102,17 +102,17 @@ function MyNavbar() {
                 </button>
               )}
               <button className="btn btn-outline-danger me-2 py-2 px-4" onClick={handleLogOut}>
-                Đăng Xuất
+                Sign Out
               </button>
               {/* Add more authenticated-only links or buttons here */}
             </>
           ) : (
             <>
               <a href="/login" className="btn btn-outline-primary me-2 py-2 px-4">
-                Đăng Nhập
+                Sign In
               </a>
               <a href="/signup" className="btn btn-outline-secondary py-2 px-4">
-                Đăng Ký
+                Sign Up
               </a>
             </>
           )}
