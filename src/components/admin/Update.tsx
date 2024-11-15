@@ -1,81 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axiosInstance from "../../utilities/axiousEdition";
 
 const Update: React.FC = () => {
-  const [uavId, setUavId] = useState("");
-  const [name, setName] = useState("");
-  const [manufacturer, setManufacturer] = useState("");
-  const [category, setCategory] = useState("");
-  const [weight, setWeight] = useState("");
-  const [dimensions, setDimensions] = useState("");
-  const [batteryLife, setBatteryLife] = useState("");
-  const [range, setRange] = useState("");
-  const [maxSpeed, setMaxSpeed] = useState("");
-  const [sensorType, setSensorType] = useState("");
-  const [releaseDate, setReleaseDate] = useState("");
-  const [supplier, setSupplier] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [description, setDescription] = useState("");
-  const [ratings, setRatings] = useState("");
-  const [price, setPrice] = useState("");
-  const [accessoriesIncluded, setAccessoriesIncluded] = useState("");
-  const [compatibility, setCompatibility] = useState("");
-  const [type, setType] = useState("");
-  const [images, setImages] = useState<File[]>([]);
+  const [formData, setFormData] = useState({
+    id: "",
+    name: "",
+    manufacturer: "",
+    category: "",
+    price: 0,
+    description: "",
 
-  const handleUpdate = () => {
-    console.log("Update UAV ID:", uavId, {
-      name,
-      manufacturer,
-      category,
-      weight,
-      dimensions,
-      batteryLife,
-      range,
-      maxSpeed,
-      sensorType,
-      releaseDate,
-      supplier,
-      quantity,
-      description,
-      ratings,
-      price,
-      accessoriesIncluded,
-      compatibility,
-      type,
-      images,
-    });
-    alert("UAV update placeholder - No API available yet.");
+  });
+
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+
+    const fetchProductData = async (id: string) => {
+      try {
+        const response = await axiosInstance.get(`/products/:id`);
+        setFormData(response.data);
+      } catch (err) {
+        setError("Error fetching product data");
+      }
+    };
+
+
+    const productId = "product-id"; 
+    fetchProductData(productId);
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = e.target.files ? Array.from(e.target.files) : [];
-    setImages(selectedFiles);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await axiosInstance.patch(`/products/${formData.id}`, formData);
+      alert("Product updated successfully");
+    } catch (err: any) {
+      setError("Error updating product");
+    }
   };
 
   return (
-    <div className="my-4">
-      <h5>Update UAV</h5>
-      <input type="text" placeholder="UAV ID" value={uavId} onChange={(e) => setUavId(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Manufacturer" value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Category (comma separated)" value={category} onChange={(e) => setCategory(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Weight" value={weight} onChange={(e) => setWeight(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Dimensions" value={dimensions} onChange={(e) => setDimensions(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Battery Life" value={batteryLife} onChange={(e) => setBatteryLife(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Range" value={range} onChange={(e) => setRange(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Max Speed" value={maxSpeed} onChange={(e) => setMaxSpeed(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Sensor Type" value={sensorType} onChange={(e) => setSensorType(e.target.value)} className="form-control my-2" />
-      <input type="date" placeholder="Release Date" value={releaseDate} onChange={(e) => setReleaseDate(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Supplier" value={supplier} onChange={(e) => setSupplier(e.target.value)} className="form-control my-2" />
-      <input type="number" placeholder="Quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)} className="form-control my-2" />
-      <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} className="form-control my-2" />
-      <input type="number" placeholder="Ratings" value={ratings} onChange={(e) => setRatings(e.target.value)} className="form-control my-2" />
-      <input type="number" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Accessories Included (comma separated)" value={accessoriesIncluded} onChange={(e) => setAccessoriesIncluded(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Compatibility" value={compatibility} onChange={(e) => setCompatibility(e.target.value)} className="form-control my-2" />
-      <input type="text" placeholder="Type (JSON format)" value={type} onChange={(e) => setType(e.target.value)} className="form-control my-2" />
-      <input type="file" multiple onChange={handleFileChange} className="form-control my-2" />
-      <button onClick={handleUpdate} className="btn btn-primary">Update UAV</button>
+    <div>
+      <h3>Update UAV</h3>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Product Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="manufacturer" className="form-label">Manufacturer</label>
+          <input
+            type="text"
+            className="form-control"
+            id="manufacturer"
+            name="manufacturer"
+            value={formData.manufacturer}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Update Product
+        </button>
+      </form>
+      {error && <div className="alert alert-danger mt-2">{error}</div>}
     </div>
   );
 };
