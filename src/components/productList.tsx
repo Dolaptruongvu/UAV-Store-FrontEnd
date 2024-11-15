@@ -18,33 +18,34 @@ function ProductList() {
         }
         const response = await axios.get(url);
         console.log("API Response:", response.data.products);
-        // Ensure the response data is an array
-        setProducts(response.data.products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
+        setProducts(response.data.products || []); // Ensure it's an array
+      } catch (error: any) { // Casting error to 'any' to avoid TS18046 error
+        console.error("Error fetching products:", error.response?.data || error.message);
       }
     };
 
-    
     fetchProducts();
   }, [slugName]);
 
   return (
     <Container className="pt-5 pb-4 mb-3">
       <Row xs={1} md={4} className="g-4">
-        {products.length > 0 ? products.map((product) => (
-          <Col key={product.id}> {/* Using product.id as the key */}
-            <Card>
-              <Card.Img variant="top" src={`/productimg/${product.images[0]}`} alt={product.name} />
-              <Card.Body>
-                <Card.Title as={'h4'}>{product.name}</Card.Title>
-                <Card.Subtitle as={'h5'}>
-                  {product.price} USD
-                </Card.Subtitle>
-              </Card.Body>
-            </Card>
-          </Col>
-        )) : (
+        {products.length > 0 ? products.map((product) => {
+          const imageUrl = product.images?.[0] ? `/productimg/${product.images[0]}` : "/default-image.jpg";
+          return (
+            <Col key={product.id}>
+              <Card>
+                <Card.Img variant="top" src={imageUrl} alt={product.name} />
+                <Card.Body>
+                  <Card.Title as="h4">{product.name}</Card.Title>
+                  <Card.Subtitle as="h5">
+                    {product.price} USD
+                  </Card.Subtitle>
+                </Card.Body>
+              </Card>
+            </Col>
+          );
+        }) : (
           <Col>
             <p>No products available.</p>
           </Col>
