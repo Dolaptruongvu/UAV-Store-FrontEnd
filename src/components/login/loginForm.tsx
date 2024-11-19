@@ -31,20 +31,20 @@ function LoginForm() {
       const response = await axiosInstance.post('/customer/login', data);
 
       if (response.data.status === 'success') {
-        const customer = response.data.data.customer; // Sử dụng cấu trúc đúng
-        console.log('Đăng nhập thành công, thông tin customer:', customer);
+        const customer = response.data.data.customer; // Correct structure usage
+        console.log('Login successful, customer information:', customer);
         setCustomer(customer);
-        // Không gọi navigate('/') ở đây
+        // Don't call navigate('/') here
       }
     } catch (err) {
       console.error('Login error:', err);
     }
   };
 
-  // useEffect để lắng nghe sự thay đổi của `customer`
+  // useEffect to watch for `customer` changes
   useEffect(() => {
     if (customer) {
-      navigate('/'); // Chỉ chuyển hướng khi customer đã được cập nhật
+      navigate('/'); // Only redirect when customer is updated
     }
   }, [customer, navigate]);
 
@@ -59,18 +59,18 @@ function LoginForm() {
         onSubmit={handleSubmit}
       >
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Địa chỉ Email</Form.Label>
-          <Form.Control type="email" placeholder="Nhập email" onChange={handleEmailChange} />
-          <Form.Text className="text-muted">Chúng tôi sẽ không bao giờ chia sẻ email của bạn.</Form.Text>
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
+          <Form.Text className="text-muted">We will never share your email with anyone else.</Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Mật khẩu</Form.Label>
-          <Form.Control type="password" placeholder="Mật khẩu" onChange={handlePasswordChange} />
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Enter password" onChange={handlePasswordChange} />
         </Form.Group>
 
         <Button variant="primary" type="submit" className="w-100">
-          Đăng nhập
+          Log In
         </Button>
       </Form>
     </div>

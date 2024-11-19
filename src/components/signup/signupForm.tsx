@@ -55,12 +55,12 @@ function SignUpForm() {
 
     // Validation
     if (!email || !password || !passwordConfirm || !name || !address || phoneNumber <= 0) {
-      setError('Tất cả các trường đều phải được điền đầy đủ.');
+      setError('All fields must be filled out.');
       return;
     }
 
     if (!comparePassword(password, passwordConfirm)) {
-      setError('Mật khẩu cần trùng khớp với nhau');
+      setError('Passwords must match.');
       return;
     }
 
@@ -89,38 +89,38 @@ function SignUpForm() {
     <div className="d-flex justify-content-center align-items-center vh-100" style={{ marginTop: '-95px' }}>
       <Form className="border p-4 rounded shadow" style={{ width: '520px' }} onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formName">
-          <Form.Label>Họ và tên</Form.Label>
+          <Form.Label>Full Name</Form.Label>
           <Form.Control type="text" placeholder="Enter your name" onChange={handleNameChange} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formAddress">
-          <Form.Label>Địa chỉ</Form.Label>
+          <Form.Label>Address</Form.Label>
           <Form.Control type="text" placeholder="Enter your address" onChange={handleAddressChange} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formPhoneNumber">
-          <Form.Label>Số điện thoại</Form.Label>
+          <Form.Label>Phone Number</Form.Label>
           <Form.Control type="tel" placeholder="(+84)" onChange={handlePhoneNumbChange} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
           <Form.Text className="text-muted">
-           Chúng tôi sẽ không chia sẽ thông tin này cho bất kỳ ai.
+            We will never share your information with anyone else.
           </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Mật khẩu</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formConfirmBasicPassword">
-          <Form.Label>Xác nhận mật khẩu</Form.Label>
+          <Form.Label>Confirm Password</Form.Label>
           <Form.Control type="password" placeholder="Confirm Password" onChange={handleConfirmPasswordChange} />
         </Form.Group>
 
         {error && <div className="alert alert-danger">{error}</div>}
 
         <Button variant="primary" type="submit" className="w-100">
-           Gửi
+          Submit
         </Button>
       </Form>
     </div>

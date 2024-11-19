@@ -14,17 +14,16 @@ import axiosInstance from "../utilities/axiousEdition";
 import { useNavigate } from "react-router-dom";
 
 function MyNavbar() {
-  const[isHovered,SetIsHovered] = useState(false);
-  const { customer,setCustomer } = useContext(AuthContext);
+  const [isHovered, setIsHovered] = useState(false);
+  const { customer, setCustomer } = useContext(AuthContext);
   const navigate = useNavigate();
 
-
-  const mouseEnter = () =>{
-    SetIsHovered(true);
-  }
-  const mouseLeave = () =>{
-    SetIsHovered(false);
-  }
+  const mouseEnter = () => {
+    setIsHovered(true);
+  };
+  const mouseLeave = () => {
+    setIsHovered(false);
+  };
 
   const handleLogOut = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     try {
@@ -38,8 +37,6 @@ function MyNavbar() {
       console.log(err);
     }
   };
-  
-  
 
   return (
     <Navbar bg="light" expand="lg" className="shadow-lg py-2 mb-4">
@@ -53,14 +50,14 @@ function MyNavbar() {
             style={{ maxWidth: "70px" }}
           />
         </Navbar.Brand>
-        <div style={{ position: 'relative', display: 'inline-block',textSizeAdjust:"inherit", alignItems:"center" }}>
+        <div style={{ position: 'relative', display: 'inline-block', textSizeAdjust: "inherit", alignItems: "center" }}>
           <h6
-            style={{ cursor: 'pointer'}}
+            style={{ cursor: 'pointer' }}
             className="mb-0 text-primary"
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
           >
-            Products  <span style={{ marginLeft: '5px' }}>&#x25BC;</span>
+            Products <span style={{ marginLeft: '5px' }}>&#x25BC;</span>
           </h6>
           {isHovered && (
             <ListGroup
@@ -76,8 +73,8 @@ function MyNavbar() {
             >
               <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/?slugName=Dji-Mavic" action>DJI Mavic</ListGroup.Item>
               <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/?slugName=Dji-Mini" action>DJI Mini</ListGroup.Item>
-              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/?slugName=Dji-Air" action>Dji Air</ListGroup.Item>
-              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/" action>Phụ kiện</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/?slugName=Dji-Air" action>DJI Air</ListGroup.Item>
+              <ListGroup.Item className="text-secondary" href="https://uav-store-front-end-6jk6.vercel.app/" action>Accessories</ListGroup.Item>
             </ListGroup>
           )}
         </div>
@@ -98,21 +95,21 @@ function MyNavbar() {
             <>
               {customer.role === 'admin' && (
                 <button className="btn btn-success me-2 py-2 px-4" onClick={() => navigate('/management')}>
-                Management
+                  Management
                 </button>
               )}
               <button className="btn btn-outline-danger me-2 py-2 px-4" onClick={handleLogOut}>
-                Đăng Xuất
+                Log Out
               </button>
               {/* Add more authenticated-only links or buttons here */}
             </>
           ) : (
             <>
               <a href="/login" className="btn btn-outline-primary me-2 py-2 px-4">
-                Đăng Nhập
+                Log In
               </a>
               <a href="/signup" className="btn btn-outline-secondary py-2 px-4">
-                Đăng Ký
+                Sign Up
               </a>
             </>
           )}
@@ -123,4 +120,3 @@ function MyNavbar() {
 }
 
 export default MyNavbar;
-
