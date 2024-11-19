@@ -18,7 +18,7 @@ function AuthenticateNavBar() {
         {/* Right section: Register button only */}
         <div className="d-flex flex-shrink-0">
           <a href="/register" className="btn btn-outline-primary py-2 px-4">
-            Đăng Ký
+            Register
           </a>
         </div>
       </Container>
