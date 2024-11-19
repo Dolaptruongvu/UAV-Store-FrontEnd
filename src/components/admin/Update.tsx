@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import axiosInstance from "../../utilities/axiousEdition";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";  // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom";
 
 const Update: React.FC = () => {
   const [id, setId] = useState<string>(""); // Product ID to be inputted
@@ -18,48 +18,55 @@ const Update: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
 
-  const navigate = useNavigate(); // useNavigate hook for navigation
+  const navigate = useNavigate();
 
-  // Memoize the fetchProductData function using useCallback
-  const fetchProductData = useCallback(async () => {
-    if (id) {
-      try {
-        const response = await axiosInstance.get(`/products/${id}`);
-        if (response.status === 200 && response.data.status === "success") {
-          const productData = response.data.product;
-          setProduct({
-            ...productData,
-            category: productData.category.join(", "), // Convert array to comma-separated string
-          });
-        } else {
-          setError("Product not found.");
-        }
-      } catch (err) {
-        console.error("Error fetching product:", err);
-        setError("Error fetching product details.");
-      }
+  const fetchProductData = async () => {
+    if (!id) {
+      setError("Please enter a Product ID to fetch.");
+      return;
     }
-  }, [id]);  // Dependency array includes 'id' since the function depends on it
-
-  // Fetch product data when the ID is provided
-  useEffect(() => {
-    fetchProductData();
-  }, [fetchProductData]);  // Now we can safely include fetchProductData in the dependency array
-
+  
+    setError(""); // Reset errors
+    try {
+      const response = await axiosInstance.get(`/products/${id}`, {
+        headers: {
+          "Cache-Control": "no-cache",  // Prevent caching
+        },
+      });
+      if (response.status === 200) {
+        const productData = response.data.product;
+  
+        // Safely handle the category field
+        const category = Array.isArray(productData.category)
+          ? productData.category.join(", ") // Convert array to comma-separated string
+          : productData.category || ""; // Default to empty string if undefined
+  
+        setProduct({
+          ...productData,
+          category, // Set category safely
+        });
+      } else {
+        setError("Unexpected response from the server.");
+      }
+    } catch (err: any) {
+      // Ignore error, no need to set error message
+      console.error("Error fetching product:", err);
+    }
+  };
+  
+  
   // Handle form submission to update product
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(""); // Reset previous errors
 
-    // Validate ID
     if (!id) {
       setError("Product ID is required.");
       return;
     }
 
-    // Prepare updated product data, only send fields that are changed
+    // Prepare updated product data
     const updatedProductData: any = {};
-
     if (product.name) updatedProductData.name = product.name;
     if (product.manufacturer) updatedProductData.manufacturer = product.manufacturer;
     if (product.category) updatedProductData.category = product.category.split(",").map((cat: string) => cat.trim());
@@ -70,11 +77,10 @@ const Update: React.FC = () => {
 
     try {
       const response = await axiosInstance.patch(`/products/${id}`, updatedProductData);
-
       if (response.status === 200) {
         setSuccessMessage("Product updated successfully!");
         setTimeout(() => {
-          navigate("/management"); // Redirect to management page after successful update
+          navigate("/management");
         }, 2000);
       } else {
         setError("Failed to update product.");
@@ -90,20 +96,22 @@ const Update: React.FC = () => {
       <div className="border p-4 rounded shadow" style={{ maxWidth: "520px", margin: "0 auto" }}>
         <h3 className="text-center mb-4">Update UAV</h3>
 
-        {/* Product ID Input */}
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formProductId">
-            <Form.Label>Product ID</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter product ID"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              required
-            />
-          </Form.Group>
+        {/* Form for fetching product data */}
+        <Form.Group className="mb-3" controlId="formProductId">
+          <Form.Label>Product ID</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter product ID"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+          />
+          <Button variant="secondary" onClick={fetchProductData} className="mt-2 w-100">
+            Fetch Product Details
+          </Button>
+        </Form.Group>
 
-          {/* Other form fields for the product */}
+        {/* Form for updating product */}
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formProductName">
             <Form.Label>Name</Form.Label>
             <Form.Control

@@ -86,7 +86,7 @@ function MyNavbar() {
         <div className="flex-grow-1 mx-4" style={{ maxWidth: "50%" }}>
           <input
             type="text"
-            placeholder="Tìm kiếm"
+            placeholder=""
             className="form-control"
             style={{ width: "100%", maxWidth: "100%" }}
           />
@@ -102,17 +102,17 @@ function MyNavbar() {
                 </button>
               )}
               <button className="btn btn-outline-danger me-2 py-2 px-4" onClick={handleLogOut}>
-                Sign Out
+                Đăng Xuất
               </button>
               {/* Add more authenticated-only links or buttons here */}
             </>
           ) : (
             <>
               <a href="/login" className="btn btn-outline-primary me-2 py-2 px-4">
-                Sign In
+                Đăng Nhập
               </a>
               <a href="/signup" className="btn btn-outline-secondary py-2 px-4">
-                Sign Up
+                Đăng Ký
               </a>
             </>
           )}

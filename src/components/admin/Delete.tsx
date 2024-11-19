@@ -17,7 +17,11 @@ const Delete: React.FC = () => {
   // Fetch products from the backend
   const fetchProducts = async () => {
     try {
-      const response = await axiosInstance.get("/products");
+      const response = await axiosInstance.get("/products", {
+        headers: {
+          "Cache-Control": "no-cache", // Prevent caching
+        },
+      });
       if (response.status === 200 && response.data.status === "success") {
         setProducts(response.data.products.map((product: any) => ({
           id: product.id,

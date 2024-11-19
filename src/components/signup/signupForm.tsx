@@ -74,7 +74,7 @@ function SignUpForm() {
     };
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/v1/customer/signup', data, { withCredentials: true });
+      const response = await axios.post('https://uav-store-backend.onrender.com/api/v1/customer/signup', data, { withCredentials: true });
       if (response.data.status === 'success') {
         const customer = response.data.data;
         setCustomer(customer);
